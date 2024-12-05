@@ -23,19 +23,19 @@ func splitInput(input: String) -> [String] {
     return input.components(separatedBy: .newlines)
 }
 
+@MainActor
 func multiplyNumbers(lines: [String]) -> Int {
     var total = 0
 
     for line in lines {
         var lineTotal = 0
         let matches = line.matches(of: search)
-        
+
         for match in matches {
             lineTotal += (match.output.1 ?? 0) * (match.output.2 ?? 0)
         }
         total += lineTotal
     }
-
 
     return total
 }

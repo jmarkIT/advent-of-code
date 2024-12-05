@@ -8,6 +8,7 @@
 import Foundation
 import RegexBuilder
 
+@MainActor
 let search = Regex {
     "mul("
     Capture {
@@ -24,6 +25,7 @@ let search = Regex {
     ")"
 }
 
+@MainActor
 let doSearch = Regex {
-    
+
 }
