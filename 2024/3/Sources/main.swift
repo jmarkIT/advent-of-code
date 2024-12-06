@@ -40,9 +40,39 @@ func multiplyNumbers(lines: [String]) -> Int {
     return total
 }
 
-let sampleInput = "xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))"
+@MainActor
+func multiplyNumbersWithCommands(lines: [String]) -> Int {
+    var total = 0
+    var doCommand = true
+
+    for line in lines {
+        var lineTotal = 0
+        let matches = line.matches(of: searchDos)
+        for match in matches {
+            let foundMatch: String = String(match.output.0)
+            if foundMatch == "don\'t()" {
+                doCommand = false
+            }
+            if foundMatch == "do()" {
+                doCommand = true
+            }
+
+            if foundMatch.contains("mul") && doCommand == true {
+                let mulMatch = foundMatch.firstMatch(of: search)
+                if let mulMatch {
+                    lineTotal += (mulMatch.output.1 ?? 0) * (mulMatch.output.2 ?? 0)
+                }
+            }
+        }
+
+        total += lineTotal
+    }
+
+    return total
+}
 
 let input = loadInput()
 let lines = splitInput(input: input)
 
 print(multiplyNumbers(lines: lines))
+print(multiplyNumbersWithCommands(lines: lines))

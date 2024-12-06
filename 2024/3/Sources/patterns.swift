@@ -26,6 +26,18 @@ let search = Regex {
 }
 
 @MainActor
-let doSearch = Regex {
-
+let searchDos = Regex {
+    ChoiceOf {
+        Capture {
+            Regex {
+                "mul("
+                OneOrMore(.digit)
+                ","
+                OneOrMore(.digit)
+                ")"
+            }
+        }
+        "do()"
+        "don't()"
+    }
 }
